@@ -451,7 +451,7 @@ var playSong = function(message, connection) {
 
     var currentSong = serverQueue.songs[currentSongIndex];
     if (currentSong) {
-        var stream = ytdl(currentSong.url, { "filter": "audioonly" });
+        var stream = ytdl(currentSong.url, { "filter": "audioonly", "quality": "lowest" });
         dispatcher = connection.playStream(stream, { volume: serverQueue.volume[message.guild.id] / 80 });
         var nowplayembed = new Discord.RichEmbed()
             .setColor(randomcolor)
