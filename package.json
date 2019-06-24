@@ -5,8 +5,8 @@
         "heroku-postbuild": "npm run build"
     },
   "engines": {
-    "npm": "5.6.0",
-    "node": "8.10.0"
+    "npm": "6.9.0",
+    "node": "12.4.0"
 },
   "description": "A discord bot for didney worl who has an appetite for non-nutritive substances",
   "main": "picabot.js",
