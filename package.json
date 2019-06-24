@@ -30,7 +30,7 @@
     "discord.js": "^11.5.1",
     "dotenv": "^4.0.0",
     "googleapis": "^20.1.0",
-    "node-opus": "^0.3.0",
+    "node-opus": "^0.3.2",
     "heroku.node": "^0.2.1",
     "pm2": "2.10.1",
     "firebase": "^4.11.0",
