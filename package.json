@@ -34,7 +34,7 @@
     "heroku.node": "^0.2.1",
     "pm2": "2.10.1",
     "firebase": "^4.11.0",
-    "ytdl-core": "^0.24.0",
+    "ytdl-core": "^0.29.2",
     "simple-youtube-api": "^5.0.2"
   }
 }
