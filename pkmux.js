@@ -371,7 +371,9 @@ bot.on("message", async(message) => {
                 return;
             }
             serverQueue.volume[message.guild.id] = args2;
+            message.channel.send("volume is"+ serverQueue.volume[message.guild.id]);
             dispatcher.setVolumeLogarithmic(args2 / 80);
+
             var setvolembed = new Discord.RichEmbed()
                 .setColor(randomcolor)
                 .setAuthor("volume controls", "https://cdn.discordapp.com/attachments/398789265900830760/405592021579989003/videotogif_2018.01.24_10.46.57.gif")
@@ -417,7 +419,6 @@ var addSong = function(message, video, voiceChannel, playlist = false) {
         if (playlist) {
             if (!bot.voiceConnections.exists("channel", message.member.voiceChannel)) {
                 message.member.voiceChannel.join().then(function(connection) {
-                    dispatcher.setVolumeLogarithmic(80/80)
                     playSong(message, connection);
                 }).catch(err => bot.channels.get(boterrorchannel).send(`${message.author.username} from ${message.guild.name} play command and error in addsong \n${err}`)); //removed consol log
             }
