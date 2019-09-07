@@ -405,7 +405,7 @@ var addSong = function(message, video, voiceChannel, playlist = false) {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: "80",
+            volume: [],
             playing: true
         };
         songQueue.set(message.guild.id, queueConstruct);
@@ -417,6 +417,7 @@ var addSong = function(message, video, voiceChannel, playlist = false) {
         if (playlist) {
             if (!bot.voiceConnections.exists("channel", message.member.voiceChannel)) {
                 message.member.voiceChannel.join().then(function(connection) {
+                    dispatcher.setVolumeLogarithmic(80)
                     playSong(message, connection);
                 }).catch(err => bot.channels.get(boterrorchannel).send(`${message.author.username} from ${message.guild.name} play command and error in addsong \n${err}`)); //removed consol log
             }
