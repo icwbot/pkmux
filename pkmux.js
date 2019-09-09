@@ -405,7 +405,7 @@ var addSong = function(message, video, voiceChannel, playlist = false) {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: 80,
+            volume: "80",
             playing: true
         };
         songQueue.set(message.guild.id, queueConstruct);
@@ -442,6 +442,7 @@ var addSong = function(message, video, voiceChannel, playlist = false) {
 }
 
 var playSong = function(message, connection) {
+    const serverQueue = songQueue.get(message.guild.id);
     if (shuffle) {
         do {
             currentSongIndex = Math.floor(Math.random() * serverQueue.songs.length);
