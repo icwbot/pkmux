@@ -408,8 +408,8 @@ var addSong = function(message, video, voiceChannel, playlist = false) {
             volume: ('70'),
             playing: true
         };
-        serverQueue.volume[message.guild.id] = "80";
         songQueue.set(message.guild.id, queueConstruct);
+        message.channel.send("songQueue"+ songQueue.queueConstruct.volume)
 
         queueConstruct.songs.push(song);
     } else {
