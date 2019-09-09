@@ -405,9 +405,10 @@ var addSong = function(message, video, voiceChannel, playlist = false) {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: "80",
+            volume: [],
             playing: true
         };
+        dispatcher.setVolumeLogarithmic(80 / 80);
         songQueue.set(message.guild.id, queueConstruct);
 
         queueConstruct.songs.push(song);
