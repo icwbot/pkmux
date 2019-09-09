@@ -404,7 +404,7 @@ var addSong = function(message, video, voiceChannel, playlist = false) {
             textChannel: message.channel,
             voiceChannel: voiceChannel,
             connection: null,
-            songs: ['80'],
+            songs: ["80"],
             volume: [],
             playing: true
         };
