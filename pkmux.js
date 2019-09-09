@@ -405,7 +405,7 @@ var addSong = function(message, video, voiceChannel, playlist = false) {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: [],
+            volume: 80,
             playing: true
         };
         songQueue.set(message.guild.id, queueConstruct);
@@ -452,7 +452,7 @@ var playSong = function(message, connection) {
     var currentSong = serverQueue.songs[currentSongIndex];
     if (currentSong) {
         var stream = ytdl(currentSong.url, { "filter": "audioonly", "quality": "lowest" });
-        dispatcher = connection.playStream(stream, { volume: /*serverQueue.volume[message.guild.id] */80/ 80 });
+        dispatcher = connection.playStream(stream, { volume: serverQueue.volume[message.guild.id] /80 });
         var nowplayembed = new Discord.RichEmbed()
             .setColor(randomcolor)
             .setAuthor(`Now ${(shuffle) ? "randomly " : ""}playing \`${currentSong.title}\``, "https://cdn.discordapp.com/attachments/398789265900830760/405592021579989003/videotogif_2018.01.24_10.46.57.gif")
