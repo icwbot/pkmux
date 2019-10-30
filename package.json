@@ -7,7 +7,7 @@
   "engines": {
     "npm": "6.9.0",
     "node": "8.10.0"
-},
+  },
   "description": "A discord bot for didney worl who has an appetite for non-nutritive substances",
   "main": "picabot.js",
   "scripts": {
@@ -27,14 +27,20 @@
     "eslint": "^4.5.0"
   },
   "dependencies": {
+    "cleverdoge": "0.3.4",
     "discord.js": "^11.5.1",
     "dotenv": "^4.0.0",
     "googleapis": "^20.1.0",
-    "node-opus": "^0.3.2",
+    "node-opus": "^0.3.3",
     "heroku.node": "^0.2.1",
-    "pm2": "2.10.1",
+    "pm2": "^2.10.2",
+    "snekfetch": "^4.0.4",
+    "cheerio": "^1.0.0-rc.3",
+    "google-it": "1.2.1",
     "firebase": "^4.11.0",
-    "ytdl-core": "^0.29.2",
-    "simple-youtube-api": "^5.0.2"
+    "ytdl-core": "^1.0.0",
+    "simple-youtube-api": "^5.0.2",
+    "jimp": "^0.2.28",
+    "stt": "0.0.1"
   }
 }
