@@ -1577,21 +1577,21 @@ bot.on('guildMemberAdd', async(member) => {
                 Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(mask) => {
                     Jimp.read(img,(image, err) => {
                         Jimp.read(images,(image2, err) => {
-                            Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(function(font) {
+                            Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
                                 image2.print(font, 121, 57, s);
                                 image2.print(font, 103, 79, u);
                                 image2.print(font, 103, 57, "to");
                                 image2.print(font, 11, 101, fact2)
                                 image2.print(font, 103, 4, "Welcome");
-                                Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(function(font) {
+                                Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(font => {
                                     image2.print(font, 120, 56, s);
                                     image2.print(font, 102, 56, "to")
                                     image2.print(font, 10, 100, fact2)
                                     image2.print(font, 102, 78, u);
                                     image2.print(font, 102, 3, "Welcome");
-                                    Jimp.loadFont(Jimp.FONT_SANS_32_BLACK).then(function(font) {
+                                    Jimp.loadFont(Jimp.FONT_SANS_32_BLACK).then(font => {
                                         image2.print(font, 104, 20, member.user.tag);
-                                        Jimp.loadFont(Jimp.FONT_SANS_32_WHITE).then(function(font) {
+                                        Jimp.loadFont(Jimp.FONT_SANS_32_WHITE).then(font => {
                                             image2.print(font, 102, 18, member.user.tag)
                                             image2.resize(1600, 480);
                                             image.resize(360, 360);
