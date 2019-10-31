@@ -15,7 +15,14 @@ const botleavejoinchannel = "431829603741466634";
 const botrejectionschannel = "432090416834412545";
 const botowner = "264470521788366848";
 const wfortunes = ["{user} keep you`r shoes out of door", "hey {user} show your swag", "be carefull {user} is here! -_-", "{user} make the party awesome", "Hi {user} Take guitar & enjoy party", "hehe {user} are slide hide your dishes", "let's go {user} for chicken dinner"];
-const wimages = [`https://imgur.com/Z2fpFVi.png`, `https://imgur.com/G29egX4.png`, `https://imgur.com/LHdn5I8.png`, `https://imgur.com/GziAP26.png`, `https://imgur.com/GjI5Vpk.png`, `https://imgur.com/WqTnmM0.png`, `https://imgur.com/qknRCM7.png`];
+const wimages = [`https://cdn.discordapp.com/attachments/639292893307207707/639297904573546503/Z2fpFVi.jpg`,
+                `https://cdn.discordapp.com/attachments/639292893307207707/639298061016760340/G29egX4.jpg`,
+                `https://cdn.discordapp.com/attachments/639292893307207707/639298136937988097/LHdn5I8.jpg`,
+                `https://cdn.discordapp.com/attachments/639292893307207707/639298183419265025/GziAP26.jpg`,
+                `https://cdn.discordapp.com/attachments/639292893307207707/639298248099627009/GjI5Vpk.png`,
+                `https://cdn.discordapp.com/attachments/639292893307207707/639298302944215072/WqTnmM0.jpg`,
+                `https://cdn.discordapp.com/attachments/639292893307207707/639298366349508618/qknRCM7.png
+                `];
 const icwstaff = ["385099687465844736", "278587244443467777", "288961251973791744"];
 const icwlogo = "https://media.discordapp.net/attachments/406099961730564107/407455733689483265/Untitled6.png?width=300&height=300";
 const icwflahimg = "https://cdn.discordapp.com/attachments/523532054499950602/607172616905555971/fx-long.gif";
@@ -1567,9 +1574,9 @@ bot.on('guildMemberAdd', async(member) => {
                 let u = `you are the ${member.guild.memberCount}${ord(member.guild.memberCount)} user`;
                 let s = member.guild.name;
                 let img = member.user.displayAvatarURL;
-                Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`).then(function(mask) {
-                    Jimp.read(img).then(function(image) {
-                        Jimp.read(images).then(function(image2) {
+                Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(mask) => {
+                    Jimp.read(img,(image, err) => {
+                        Jimp.read(images,(image2, err) => {
                             Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(function(font) {
                                 image2.print(font, 121, 57, s);
                                 image2.print(font, 103, 79, u);
@@ -1590,9 +1597,9 @@ bot.on('guildMemberAdd', async(member) => {
                                             image.resize(360, 360);
                                             mask.resize(360, 360);
                                             image.mask(mask, 0, 0);
-                                            image2.composite(image, 5, 5);
-                                            image2.getBuffer(Jimp.MIME_PNG,
-                                                (error, buffer) => { member.guild.channels.get(wc.toString()).send({ files: [{ name: 'welcome.png', attachment: buffer }] }); });
+                                            image2.composite(image, 5, 5)
+                                            .write(welcome.jpg)
+                                            message.channel.send(new Discord.Attachment(welcome.jpg));
                                         });
                                     });
                                 });
