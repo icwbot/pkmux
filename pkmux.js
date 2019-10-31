@@ -1600,8 +1600,8 @@ bot.on('guildMemberAdd', async(member) => {
                                             mask.resize(360, 360);
                                             image.mask(mask, 0, 0);
                                             image2.composite(image, 5, 5)
-                                            .write(welcome.jpg)
-                                            member.guild.channels.get(wc.toString()).send(new Discord.Attachment(welcome.jpg));
+                                            .write(`welcome.jpg`)
+                                            member.guild.channels.get(wc.toString()).send(new Discord.Attachment(`welcome.jpg`));
                                         });
                                     });
                                 });
