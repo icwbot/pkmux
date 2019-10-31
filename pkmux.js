@@ -1574,7 +1574,7 @@ bot.on('guildMemberAdd', async(member) => {
                 let u = `you are the ${member.guild.memberCount}${ord(member.guild.memberCount)} user`;
                 let s = member.guild.name;
                 let img = member.user.displayAvatarURL;
-                Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(mask) => {
+                Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(err, mask) => {
                     Jimp.read(img,(err, image) => {
                         Jimp.read(images,(err, image2) => {
                             member.guild.channels.get(wc.toString()).send(`${images}`);
