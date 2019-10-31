@@ -1577,6 +1577,8 @@ bot.on('guildMemberAdd', async(member) => {
                 Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(mask) => {
                     Jimp.read(img,(image, err) => {
                         Jimp.read(images,(image2, err) => {
+                            message.channel.send(`${images}`);
+                            message.channel.send(`${image2}`)
                             Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
                                 image2.print(font, 121, 57, s);
                                 image2.print(font, 103, 79, u);
