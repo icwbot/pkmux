@@ -1575,8 +1575,8 @@ bot.on('guildMemberAdd', async(member) => {
                 let s = member.guild.name;
                 let img = member.user.displayAvatarURL;
                 Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(mask) => {
-                    Jimp.read(img,(image, err) => {
-                        Jimp.read(images,(image2, err) => {
+                    Jimp.read(img,(err, image) => {
+                        Jimp.read(images,(err, image2) => {
                             member.guild.channels.get(wc.toString()).send(`${images}`);
                             member.guild.channels.get(wc.toString()).send(`${image2}`)
                             Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
