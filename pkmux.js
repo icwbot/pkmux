@@ -466,7 +466,7 @@ bot.on("message", async(message) => {
             }).catch(function(err) {
                 message.channel.send(err + "\n\n\n");
             });
-            message.channel.send(`offline status set: ${arg2} \n if you want to clear offline status use only \`\`brb\`\``);
+            message.channel.send(`offline status set: \`\`${arg2}\`\` \nif you want to clear offline status use only \`\`brb\`\``);
         }
     }
 
