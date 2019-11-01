@@ -1,7 +1,4 @@
-module.exports = {
-	name: 'eval',
-	description: 'eval',
-	execute(message, args, bot) {
+module.exports.run = async (bot, message, args) => {
 		if (message.author.id !== botowner) {
                 message.reply('this command is only for bot owner!!!');
                 return;
@@ -25,5 +22,8 @@ module.exports = {
             } catch (error) {
                 message.channel.send(`The following error occured \`\`\`js\n${error}\`\`\``);
             }
-	},
 };
+
+module.exports.help = {
+  name: "eval"
+}
