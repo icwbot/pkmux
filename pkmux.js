@@ -62,11 +62,12 @@ firebase.auth().signInWithEmailAndPassword(process.env.FB_EMAIL, process.env.FB_
 const db = firebase.database();
 /*--------------------------------------------------------------------------------------------*/
 bot.commands = new Discord.Collection();
+
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+	bot.commands.set(command.name, command);
 }
 /*-------------------------------------------------------------------------------------------*/
 bot.on("ready", function() {
@@ -140,9 +141,10 @@ bot.on("message", async(message) => {
 
 //---------------------------------------------------------------------------------------------------------------------
 
-		if (!client.commands.has(command)) return;
+		if (!bot.commands.has(command)) return;
+
 		try {
-			client.commands.get(command).execute(message, args);
+			bot.commands.get(command).execute(message, args);
 		} catch (error) {
 			console.error(error);
 			message.reply('there was an error trying to execute that command!');
@@ -449,14 +451,15 @@ bot.on("message", async(message) => {
 	const command = comarg.shift().toLowerCase();
 //---------------------------------------------------------------------------
 
-	if (!client.commands.has(command)) return;
+	if (!bot.commands.has(command)) return;
 
 	try {
-		client.commands.get(command).execute(message, args);
+		bot.commands.get(command).execute(message, args);
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
+
 //---------------------------------------------------------------------------
 
     if (command === "set-stream" || command === "ss") {
