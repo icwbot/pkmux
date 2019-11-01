@@ -16,13 +16,14 @@ const botrejectionschannel = "432090416834412545";
 const botowner = "264470521788366848";
 const wfortunes = ["{user} keep you`r shoes out of door", "hey {user} show your swag", "be carefull {user} is here! -_-", "{user} make the party awesome", "Hi {user} Take guitar & enjoy party", "hehe {user} are slide hide your dishes", "let's go {user} for chicken dinner"];
 const wimages = [`https://cdn.discordapp.com/attachments/639292893307207707/639297904573546503/Z2fpFVi.jpg`,
-                `https://cdn.discordapp.com/attachments/639292893307207707/639298061016760340/G29egX4.jpg`,
-                `https://cdn.discordapp.com/attachments/639292893307207707/639298136937988097/LHdn5I8.jpg`,
-                `https://cdn.discordapp.com/attachments/639292893307207707/639298183419265025/GziAP26.jpg`,
-                `https://cdn.discordapp.com/attachments/639292893307207707/639298248099627009/GjI5Vpk.png`,
-                `https://cdn.discordapp.com/attachments/639292893307207707/639298302944215072/WqTnmM0.jpg`,
-                `https://cdn.discordapp.com/attachments/639292893307207707/639298366349508618/qknRCM7.png
-                `];
+    `https://cdn.discordapp.com/attachments/639292893307207707/639298061016760340/G29egX4.jpg`,
+    `https://cdn.discordapp.com/attachments/639292893307207707/639298136937988097/LHdn5I8.jpg`,
+    `https://cdn.discordapp.com/attachments/639292893307207707/639298183419265025/GziAP26.jpg`,
+    `https://cdn.discordapp.com/attachments/639292893307207707/639298248099627009/GjI5Vpk.png`,
+    `https://cdn.discordapp.com/attachments/639292893307207707/639298302944215072/WqTnmM0.jpg`,
+    `https://cdn.discordapp.com/attachments/639292893307207707/639298366349508618/qknRCM7.png
+                `
+];
 const icwstaff = ["385099687465844736", "278587244443467777", "288961251973791744"];
 const icwlogo = "https://media.discordapp.net/attachments/406099961730564107/407455733689483265/Untitled6.png?width=300&height=300";
 const icwflahimg = "https://cdn.discordapp.com/attachments/523532054499950602/607172616905555971/fx-long.gif";
@@ -59,7 +60,15 @@ firebase.initializeApp({
 });
 firebase.auth().signInWithEmailAndPassword(process.env.FB_EMAIL, process.env.FB_PASSWORD);
 const db = firebase.database();
+/*--------------------------------------------------------------------------------------------*/
+bot.commands = new Discord.Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.name, command);
+}
+/*-------------------------------------------------------------------------------------------*/
 bot.on("ready", function() {
     console.log("Bot ready");
     bot.channels.get(botlogchannel).send("bot ready");
@@ -93,11 +102,11 @@ bot.on('message', async(message) => {
     const command = comarg.shift().toLowerCase();
     if (command === "del-prefix" || command === "delete-prefix") {
         if (message.author.id !== botowner && !message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(`U don't have permission to do that`);
-            firebase.database().ref('servers/'+ message.guild.id + '/guildprefix').remove()
+        firebase.database().ref('servers/' + message.guild.id + '/guildprefix').remove()
             .catch(function(err) {
                 message.channel.send(err + "\n\n\n");
             });
-            message.channel.send(`prefix removed successfully for ${message.guild.name}\nnow default prefix is ${prefix}`);
+        message.channel.send(`prefix removed successfully for ${message.guild.name}\nnow default prefix is ${prefix}`);
     }
 
     const mentionuser = message.mentions.members.first();
@@ -106,8 +115,7 @@ bot.on('message', async(message) => {
     if (brbstatus === null || !brbstatus) return undefined;
     if (mentionuser.presence.status === 'offline') {
         message.channel.send(`hey <@${message.author.id}> <@${mentionuser.user.id}> is ${brbstatus}`)
-    }
-    else {
+    } else {
         return undefined;
     }
 
@@ -128,7 +136,19 @@ bot.on("message", async(message) => {
         if (message.guild) return undefined
         args = message.content.substring(prefix.length + 1).split();
         comarg = message.content.slice(prefix.length).trim().split(/ +/g);
-        const command = comarg.shift().toLowerCase();
+		const command = comarg.shift().toLowerCase();
+
+//---------------------------------------------------------------------------------------------------------------------
+
+		if (!client.commands.has(command)) return;
+		try {
+			client.commands.get(command).execute(message, args);
+		} catch (error) {
+			console.error(error);
+			message.reply('there was an error trying to execute that command!');
+		}
+
+//--------------------------------------------------------------------------------------------------------------------
 
         if (command === "eval") {
             if (message.author.id !== botowner) {
@@ -190,10 +210,10 @@ bot.on("message", async(message) => {
             if (!s_prefix) return message.channel.send(`Please add server prefix after command like \`\`${prefix}setprefix 123456789 $\`\``);
             const server = bot.guilds.get(s_id);
             if (arg2 === prefix) {
-                firebase.database().ref('servers/'+ server.id + '/guildprefix').remove()
-                .catch(function(err) {
-                    message.channel.send(err + "\n\n\n");
-                });
+                firebase.database().ref('servers/' + server.id + '/guildprefix').remove()
+                    .catch(function(err) {
+                        message.channel.send(err + "\n\n\n");
+                    });
                 message.channel.send(`prefix updated ${arg} for ${server.name}`);
             } else {
                 firebase.database().ref('servers/' + server.id).update({
@@ -426,7 +446,18 @@ bot.on("message", async(message) => {
         args = message.content.substring(prefix.length + 1).split();
         comarg = message.content.slice(prefix.length).trim().split(/ +/g);
     }
-    const command = comarg.shift().toLowerCase();
+	const command = comarg.shift().toLowerCase();
+//---------------------------------------------------------------------------
+
+	if (!client.commands.has(command)) return;
+
+	try {
+		client.commands.get(command).execute(message, args);
+	} catch (error) {
+		console.error(error);
+		message.reply('there was an error trying to execute that command!');
+	}
+//---------------------------------------------------------------------------
 
     if (command === "set-stream" || command === "ss") {
         if (message.author.id !== botowner) {
@@ -454,10 +485,10 @@ bot.on("message", async(message) => {
             if (brbstatus === null || !brbstatus) {
                 message.channel.send(`you have no offline status message for clear \nif you want to set then add a message after command \nlike- \`\`brb im busy\`\``)
             } else {
-                firebase.database().ref('users/'+ message.author.id + '/brbmessage').remove()
-                .catch(function(err) {
-                    message.channel.send(err + "\n\n\n");
-                });
+                firebase.database().ref('users/' + message.author.id + '/brbmessage').remove()
+                    .catch(function(err) {
+                        message.channel.send(err + "\n\n\n");
+                    });
                 message.channel.send(`offline status is clear`)
             }
         } else {
@@ -947,9 +978,9 @@ bot.on("message", async(message) => {
             } else {
                 message.channel.send(wm.replace('{user}', member.toString()).replace('{members}', member.guild.memberCount));
             }
-            Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(err, mask) => {
-                Jimp.read(img,(err, image) => {
-                    Jimp.read(images,(err, image2) => {
+            Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`, (err, mask) => {
+                Jimp.read(img, (err, image) => {
+                    Jimp.read(images, (err, image2) => {
                         Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
                             image2.print(font, 121, 57, s);
                             image2.print(font, 103, 79, u);
@@ -971,8 +1002,8 @@ bot.on("message", async(message) => {
                                         mask.resize(360, 360);
                                         image.mask(mask, 0, 0);
                                         image2.composite(image, 5, 5)
-                                        .write(`welcome.jpg`)
-                                            message.channel.send(new Discord.Attachment(`welcome.jpg`));
+                                            .write(`welcome.jpg`)
+                                        message.channel.send(new Discord.Attachment(`welcome.jpg`));
                                     });
                                 });
                             });
@@ -983,8 +1014,8 @@ bot.on("message", async(message) => {
         } else {
             if (wchannelid === null) { wchannel = "Not Set" } else { wchannel = `<#${wchannelid}>` }
             let welcomeembed = new Discord.RichEmbed()
-            .setAuthor("ICW WELCOME CONTROL",`${icwflashlogo}`)
-            .setDescription(`:black_square_button: | \`\`on/off\`\` welcome switch
+                .setAuthor("ICW WELCOME CONTROL", `${icwflashlogo}`)
+                .setDescription(`:black_square_button: | \`\`on/off\`\` welcome switch
             \n:black_square_button: | \`\`use-image\`\` switch of welcome image
             \n:black_square_button: | \`\`use-jointext\`\` switch of user join text
             \n:black_square_button: | \`\`use-leavetext\`\` switch of user leave text
@@ -1002,11 +1033,11 @@ bot.on("message", async(message) => {
             \n:black_square_button: | welcome leave text switch is **${wleavetextonoff}**
             \n:black_square_button: | welcome userinfo text switch is **${wuinfoonoff}**
             \n:black_square_button: | welcome image switch is **${wimageonoff}**`)
-            .setImage(icwflahimg)
-            .setFooter("Bot Developed by: PK#1650 ", `${pkflashlogo}`)
-            .setColor(randomcolor)
-            .setTimestamp();
-            message.channel.send({embed: welcomeembed});
+                .setImage(icwflahimg)
+                .setFooter("Bot Developed by: PK#1650 ", `${pkflashlogo}`)
+                .setColor(randomcolor)
+                .setTimestamp();
+            message.channel.send({ embed: welcomeembed });
         }
     }
 
@@ -1608,9 +1639,9 @@ bot.on('guildMemberAdd', async(member) => {
                 let u = `you are the ${member.guild.memberCount}${ord(member.guild.memberCount)} user`;
                 let s = member.guild.name;
                 let img = member.user.displayAvatarURL;
-                Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(err, mask) => {
-                    Jimp.read(img,(err, image) => {
-                        Jimp.read(images,(err, image2) => {
+                Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`, (err, mask) => {
+                    Jimp.read(img, (err, image) => {
+                        Jimp.read(images, (err, image2) => {
                             Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
                                 image2.print(font, 121, 57, s);
                                 image2.print(font, 103, 79, u);
@@ -1632,7 +1663,7 @@ bot.on('guildMemberAdd', async(member) => {
                                             mask.resize(360, 360);
                                             image.mask(mask, 0, 0);
                                             image2.composite(image, 5, 5)
-                                            .write(`welcome.jpg`)
+                                                .write(`welcome.jpg`)
                                             member.guild.channels.get(wc.toString()).send(new Discord.Attachment(`welcome.jpg`));
                                         });
                                     });
@@ -1645,9 +1676,9 @@ bot.on('guildMemberAdd', async(member) => {
                 let u = `you are the ${member.guild.memberCount}${ord(member.guild.memberCount)} user`;
                 let s = member.guild.name;
                 let img = member.user.displayAvatarURL;
-                Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(err, mask) => {
-                    Jimp.read(img,(err, image) => {
-                        Jimp.read(wcustomimageurl,(err, image2) => {
+                Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`, (err, mask) => {
+                    Jimp.read(img, (err, image) => {
+                        Jimp.read(wcustomimageurl, (err, image2) => {
                             Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
                                 image2.print(font, 121, 57, s);
                                 image2.print(font, 103, 79, u);
@@ -1669,7 +1700,7 @@ bot.on('guildMemberAdd', async(member) => {
                                             mask.resize(360, 360);
                                             image.mask(mask, 0, 0);
                                             image2.composite(image, 5, 5)
-                                            .write(`welcome.jpg`)
+                                                .write(`welcome.jpg`)
                                             member.guild.channels.get(wc.toString()).send(new Discord.Attachment(`welcome.jpg`));
                                         });
                                     });
