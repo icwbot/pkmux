@@ -449,7 +449,7 @@ bot.on("message", async(message) => {
 
     if (command === "brb") {
         let arg2 = args.join("").substring(command.length);
-        const brbstatus = (await db.ref(`users/${mentionuser.user.id}`).child('brbmessage').once('value')).val();
+        const brbstatus = (await db.ref(`users/${message.author.id}`).child('brbmessage').once('value')).val();
         if (!arg2) {
             if (brb === null || !brb) {
                 message.channel.send(`you have no offline status message for clear \nif you want to set then add a message after command \nlike- \`\`brb im busy\`\``)
