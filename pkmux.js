@@ -449,12 +449,25 @@ bot.on("message", async(message) => {
 
     if (command === "brb") {
         let arg2 = args.join("").substring(command.length);
-        firebase.database().ref('users/' + message.author.id).update({
-            brbmessage: arg2
-        }).catch(function(err) {
-            message.channel.send(err + "\n\n\n");
-        });
-        message.channel.send(`offline status set: ${arg2} \nuse \`\`brb-clear\`\` for clear offline status`);
+        const brbstatus = (await db.ref(`users/${mentionuser.user.id}`).child('brbmessage').once('value')).val();
+        if (!arg2) {
+            if (brb === null || !brb) {
+                message.channel.send(`you have no offline status message for clear \nif you want to set then add a message after command \nlike- \`\`brb im busy\`\``)
+            } else {
+                firebase.database().ref('users/'+ message.author.id + '/brbmessage').remove()
+                .catch(function(err) {
+                    message.channel.send(err + "\n\n\n");
+                });
+                message.channel.send(`offline status is clear`)
+            }
+        } else {
+            firebase.database().ref('users/' + message.author.id).update({
+                brbmessage: arg2
+            }).catch(function(err) {
+                message.channel.send(err + "\n\n\n");
+            });
+            message.channel.send(`offline status set: ${arg2} \n if you want to clear offline status use only \`\`brb\`\``);
+        }
     }
 
     if (command === "restart") {
