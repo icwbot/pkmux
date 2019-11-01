@@ -91,7 +91,7 @@ bot.on('message', async(message) => {
     args = message.content.substring(prefix.length + 1).split();
     comarg = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = comarg.shift().toLowerCase();
-    if (command === "delprefix" || command === "deleteprefix") {
+    if (command === "del-prefix" || command === "delete-prefix") {
         if (message.author.id !== botowner && !message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(`U don't have permission to do that`);
             firebase.database().ref('servers/'+ message.guild.id + '/guildprefix').remove()
             .catch(function(err) {
@@ -162,7 +162,7 @@ bot.on("message", async(message) => {
                 .replace(/@/g, "@" + String.fromCharCode(8203));
         }
 
-        if (command === "setstream" || command === "ss") {
+        if (command === "set-stream" || command === "ss") {
             if (message.author.id !== botowner) {
                 message.reply('this command is only for bot owner!!!');
                 return;
@@ -176,7 +176,7 @@ bot.on("message", async(message) => {
             message.channel.send(`Stream updated successfully ${arg2}`);
         }
 
-        if (command === "setprefix") {
+        if (command === "set-prefix") {
             if (message.author.id !== botowner) {
                 message.reply('this command is only for bot owner!!!');
                 return;
@@ -247,14 +247,14 @@ bot.on("message", async(message) => {
                 .setColor(randomcolor)
                 .setAuthor("Hi " + message.author.username.toString(), message.author.displayAvatarURL)
                 .setDescription(`ICW help Section \nDefault Prefix = ${prefix} \nvolume command is for all users \nmore commands coming soon`)
-                .addField("Custom Prefix", `setprefix - (for set the custom prefix for server) \nprefix - (for check the server prefix) \ndeleteprefix - (for delete prefix if you forget your prefix)\`\`$delprefix\`\``)
+                .addField("Custom Prefix", `set-prefix - (for set the custom prefix for server) \nprefix - (for check the server prefix) \ndelete-prefix - (for delete prefix if you forget your prefix)\`\`$delprefix\`\``)
                 .addField("Bot info commands", `ping - (bot ping) \ninvite - (bot invite link)\nbotinfo - (info about the bot)\`\`info , botstatus\`\` \nuptime - (uptime of the bot)`)
                 .addField("until commands", `brb- ('for set your  offline status') \ncleverbot - (talk with bot with mention or icw \`\`example - icw hi\`\`) \`\`icw\`\` \nweather - (check your city weather) \nsay - (bot saying your message) \nserverinfo - (info about server)`)
                 .addField("Modration command", ` welcome - (welcoming the member) \n purge (delete multiple messages) \`\`delete\`\`, \`\`prune\`\` \n warn - (for warning a member) \n kick - (for kick a member) \n ban - (for ban a member)`)
                 .addField("Music commands", `play - (for serach and add your song in thre queue) \`\`p\`\` \npause - (pause the player) \nresume - (resume the player) \nvolume - (set your player volume) \`\`sv , setvolume\`\` \nskip - (for next song) \`\`s , next\`\` \nprev - (for previos song) \nstop - (for stop the player) \nqueue - (for check playlist) \`\`q , playlist\`\` \nsong - (view current song) \`\`np , nowplaying\`\` \nrandom - (playing randomly)`)
                 .setThumbnail(`${icwlogo}`)
                 .setFooter("Bot Developed by: PK#1650 ", `${pkflashlogo}`)
-                .addField("if you find any bug plz report it with command", `bugreport - (report for any bugs or problams) \`\`bug\`\``)
+                .addField("if you find any bug plz report it with command", `bug-report - (report for any bugs or problams) \`\`bug\`\``)
                 .addField("support server", `[link](https://discord.gg/zFDvBay)`, inline = true)
                 .addField("bot invite link", `[invite](https://discordapp.com/oauth2/authorize?client_id=376292306233458688&permissions=8&scope=bot)`, inline = true)
                 .addField("please give upvote", `[vote and invite link](https://top.gg/bot/376292306233458688)`, inline = true)
@@ -269,7 +269,7 @@ bot.on("message", async(message) => {
             message.channel.send(args.join("").substring(3));
         }
 
-        if (command === "bugreport" || command === "bug") {
+        if (command === "bug-report" || command === "bug") {
             let args2 = args.join("").substring(command.length);
             if (!args2) return message.channel.send(`***plz add a bug message after command***`);
             message.channel.send(`***Report sented succesfully thank you***`);
@@ -428,7 +428,7 @@ bot.on("message", async(message) => {
     }
     const command = comarg.shift().toLowerCase();
 
-    if (command === "setstream" || command === "ss") {
+    if (command === "set-stream" || command === "ss") {
         if (message.author.id !== botowner) {
             message.reply('this command is only for bot owner!!!');
             return;
@@ -536,14 +536,14 @@ bot.on("message", async(message) => {
             .setColor(randomcolor)
             .setAuthor("Hi " + message.author.username.toString(), message.author.displayAvatarURL)
             .setDescription(`ICW help Section \nDefault Prefix = ${prefix} \nvolume command is for all users \nmore commands coming soon`)
-            .addField("Custom Prefix", `setprefix - (for set the custom prefix for server) \nprefix - (for check the server prefix) \ndeleteprefix - (for delete prefix if you forget your prefix)\`\`$delprefix\`\``)
+            .addField("Custom Prefix", `set-prefix - (for set the custom prefix for server) \nprefix - (for check the server prefix) \ndelete-prefix - (for delete prefix if you forget your prefix)\`\`$delprefix\`\``)
             .addField("Bot info commands", `ping - (bot ping) \ninvite - (bot invite link)\nbotinfo - (info about the bot)\`\`info , botstatus\`\` \nuptime - (uptime of the bot)`)
             .addField("until commands", `brb- ('for set your  offline status') \ncleverbot - (talk with bot with mention or icw \`\`example - icw hi\`\`) \`\`icw\`\` \nweather - (check your city weather) \nsay - (bot saying your message) \nserverinfo - (info about server)`)
             .addField("Modration command", ` welcome - (welcoming the member) \n purge (delete multiple messages) \`\`delete\`\`, \`\`prune\`\` \n warn - (for warning a member) \n kick - (for kick a member) \n ban - (for ban a member)`)
             .addField("Music commands", `play - (for serach and add your song in thre queue) \`\`p\`\` \npause - (pause the player) \nresume - (resume the player) \nvolume - (set your player volume) \`\`sv , setvolume\`\` \nskip - (for next song) \`\`s , next\`\` \nprev - (for previos song) \nstop - (for stop the player) \nqueue - (for check playlist) \`\`q , playlist\`\` \nsong - (view current song) \`\`np , nowplaying\`\` \nrandom - (playing randomly)`)
             .setThumbnail(`${icwlogo}`)
             .setFooter("Bot Developed by: PK#1650 ", `${pkflashlogo}`)
-            .addField("if you find any bug plz report it with command", `bugreport - (report for any bugs or problams) \`\`bug\`\``)
+            .addField("if you find any bug plz report it with command", `bug-report - (report for any bugs or problams) \`\`bug\`\``)
             .addField("support server", `[link](https://discord.gg/zFDvBay)`, inline = true)
             .addField("bot invite link", `[invite](https://discordapp.com/oauth2/authorize?client_id=376292306233458688&permissions=8&scope=bot)`, inline = true)
             .addField("please give upvote", `[vote and invite link](https://top.gg/bot/376292306233458688)`, inline = true)
@@ -559,7 +559,7 @@ bot.on("message", async(message) => {
         message.channel.send(args.join("").substring(3));
     }
 
-    if (command === "bugreport" || command === "bug") {
+    if (command === "bug-report" || command === "bug") {
         let args2 = args.join("").substring(command.length);
         if (!args2) return message.channel.send(`***plz add a bug message after command***`);
         message.channel.send(`***Report sented succesfully thank you***`);
