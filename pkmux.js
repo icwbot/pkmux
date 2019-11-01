@@ -100,11 +100,11 @@ bot.on('message', async(message) => {
             message.channel.send(`prefix removed successfully for ${message.guild.name}\nnow default prefix is ${prefix}`);
     }
 
-    const mantionuser = message.mentions.members.first();
-    const brbstatus = (await db.ref(`users/${mantionuser.id}`).child('brbmessage').once('value')).val();
+    const mentionuser = message.mentions.members.first();
+    const brbstatus = (await db.ref(`users/${mentionuser.user.id}`).child('brbmessage').once('value')).val();
     if (brbstatus === null || !brbstatus) return undefined;
     if (mentionuser.presence.status === 'offline') {
-        message.channel.send(`hey <@${message.author.id}> <@${mantiouser.id}> is ${brbstatus}`)
+        message.channel.send(`hey <@${message.author.id}> <@${mentionuser.user.id}> is ${brbstatus}`)
     }
     else {
         return undefined;
