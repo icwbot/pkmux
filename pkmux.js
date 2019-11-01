@@ -99,6 +99,17 @@ bot.on('message', async(message) => {
             });
             message.channel.send(`prefix removed successfully for ${message.guild.name}\nnow default prefix is ${prefix}`);
     }
+
+    const mantionuser = message.mentions.members.first();
+    const brbstatus = (await db.ref(`users/${mantionuser.id}`).child('brbmessage').once('value')).val();
+    if (brbstatus === null || !brbstatus) return undefined;
+    if (mentionuser.presence.status === 'offline') {
+        message.channel.send(`hey <@${message.author.id}> <@${mantiouser.id}> is ${brbstatus}`)
+    }
+    else {
+        return undefined;
+    }
+
 });
 
 /*----------------------------------------------------------------------------------------------------------------
@@ -435,6 +446,16 @@ bot.on("message", async(message) => {
         message.channel.send({ embed: pingembed })
     }
 
+    if (command === "brb") {
+        let arg2 = args.join("").substring(command.length);
+        firebase.database().ref('users/' + message.author.id).update({
+            brbmessage: arg2
+        }).catch(function(err) {
+            message.channel.send(err + "\n\n\n");
+        });
+        message.channel.send(`offline status set: ${arg2} \nuse \`\`brb-clear\`\` for clear offline status`);
+    }
+
     if (command === "restart") {
         if (message.author.id !== botowner) {
             message.reply('this command is only for bot owner!!!');
@@ -443,7 +464,6 @@ bot.on("message", async(message) => {
         message.channel.send("bot restarting");
         process.exit()
     }
-
     if (command === "eval") {
         if (message.author.id !== botowner) {
             message.reply('this command is only for bot owner!!!');
@@ -1577,8 +1597,6 @@ bot.on('guildMemberAdd', async(member) => {
                 Jimp.read(`https://cloud.githubusercontent.com/assets/414918/11165709/051d10b0-8b0f-11e5-864a-20ef0bada8d6.png`,(err, mask) => {
                     Jimp.read(img,(err, image) => {
                         Jimp.read(images,(err, image2) => {
-                            member.guild.channels.get(wc.toString()).send(`${images}`);
-                            member.guild.channels.get(wc.toString()).send(`${image2}`)
                             Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font => {
                                 image2.print(font, 121, 57, s);
                                 image2.print(font, 103, 79, u);
