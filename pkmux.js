@@ -101,6 +101,7 @@ bot.on('message', async(message) => {
     }
 
     const mentionuser = message.mentions.members.first();
+    if (!mentionuser) return undefined;
     const brbstatus = (await db.ref(`users/${mentionuser.user.id}`).child('brbmessage').once('value')).val();
     if (brbstatus === null || !brbstatus) return undefined;
     if (mentionuser.presence.status === 'offline') {
